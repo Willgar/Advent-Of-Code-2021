@@ -74,52 +74,39 @@ while val != "":
     val = input()
     if val=="":
         break
-
     roof.append(list(val))
 
 
 tops = []
-print(roof)
 for x in range(len(roof)):
     for y in range(len(roof[x])):
-        #print(x,y,roof[x][y], len(roof[x]), len(roof))
         if x == 0:
             if y == 0:
                 if roof[x][y] < roof[x][y+1]  and roof[x][y] < roof[x+1][y]:
-                    print("1",x,y,roof[x][y])
                     tops.append(Height(x,y,roof[x][y]))
             elif y == len(roof[x])-1:
                 if roof[x][y] < roof[x][y-1]  and roof[x][y] < roof[x+1][y]:
-                    print("2",x,y,roof[x][y])
                     tops.append(Height(x,y,roof[x][y]))
             else:
                 if roof[x][y] < roof[x][y-1] and roof[x][y] < roof[x][y+1] and roof[x][y] < roof[x+1][y]:
-                    print("3",x,y,roof[x][y])
                     tops.append(Height(x,y,roof[x][y]))
         elif x == len(roof)-1:
-            #print("hello")
             if y == 0:
                 if roof[x][y] < roof[x][y+1]  and roof[x][y] < roof[x-1][y]:
-                    print("4",x,y,roof[x][y])
                     tops.append(Height(x,y,roof[x][y]))
             elif y == len(roof[x])-1:
                 if roof[x][y] < roof[x][y-1]  and roof[x][y] < roof[x-1][y]:
-                    print("5",x,y,roof[x][y])
                     tops.append(Height(x,y,roof[x][y]))
             else:
                 if roof[x][y] < roof[x][y-1] and roof[x][y] < roof[x][y+1] and roof[x][y] < roof[x-1][y]:
-                    print("6",x,y,roof[x][y])
                     tops.append(Height(x,y,roof[x][y]))
         elif y == len(roof[x])-1:
             if roof[x][y] < roof[x][y-1] and roof[x][y] < roof[x+1][y] and roof[x][y] < roof[x-1][y]:
-                print("7",x,y,roof[x][y])
                 tops.append(Height(x,y,roof[x][y]))
         elif y == 0:
             if roof[x][y] < roof[x][y+1] and roof[x][y] < roof[x+1][y] and roof[x][y] < roof[x-1][y]:
-                print("7",x,y,roof[x][y])
                 tops.append(Height(x,y,roof[x][y]))
         elif roof[x][y] < roof[x][y-1] and roof[x][y] < roof[x][y+1] and roof[x][y] < roof[x-1][y] and roof[x][y] < roof[x+1][y]:
-            print("8",x,y,roof[x][y])
             tops.append(Height(x,y,roof[x][y]))
 
 def try_neightbour(x,y):
@@ -132,33 +119,26 @@ def try_neightbour(x,y):
 
 def find_adj(x,y,adj):
     new_adj = []
-    #print(adj)
     if int(try_neightbour(x+1,y)) < 9:
-        #print("1",try_neightbour(x+1,y))
         if [x+1,y] not in adj:
             new_adj.append([x+1,y])
     if int(try_neightbour(x-1,y)) < 9:
-        #print("2",try_neightbour(x-1,y))
         if [x-1,y] not in adj:
             new_adj.append([x-1,y])
     if int(try_neightbour(x,y+1)) < 9:
-        #print("3",try_neightbour(x,y+1))
         if [x,y+1] not in adj:
             new_adj.append([x,y+1])
     if int(try_neightbour(x,y-1)) < 9:
-        #print("4",try_neightbour(x,y-1))
         if [x,y-1] not in adj:
             new_adj.append([x,y-1])
 
     for x in range(len(new_adj)):
-        #print(roof[new_adj[x][0]][new_adj[x][1]])
         if new_adj[x] not in adj:
             adj.append(new_adj[x])
 
     if new_adj == []:
         return adj
     else:
-        #print(new_adj)
         for x in range(len(new_adj)):
             newstuff = find_adj(new_adj[x][0],new_adj[x][1], adj)
             for x in range(len(newstuff)):
@@ -167,18 +147,11 @@ def find_adj(x,y,adj):
     return adj
 
 
-#newlist = find_adj(tops[0].x, tops[0].y, [[tops[0].x,tops[0].y]])
-#print(tops)
 sum = []
 basin = []
 for x in range(len(tops)):
     sum.append(find_adj(tops[x].x, tops[x].y, [[tops[x].x,tops[x].y]]))
-    print(sum[len(sum)-1])
     basin.append(len(sum[len(sum)-1]))
 basin.sort()
 print(basin)
 print(basin[len(basin)-1]*basin[len(basin)-2]*basin[len(basin)-3])
-#print(sum)
-#print(len(basin[len(basin)-1]),len(basin[len(basin)-2]),len(basin[len(basin)-3]))
-
-#print(len(basin[len(basin)-1])*len(basin[len(basin)-2])*len(basin[len(basin)-3]))
